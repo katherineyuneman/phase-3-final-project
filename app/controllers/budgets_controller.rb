@@ -5,9 +5,19 @@ class BudgetsController < ApplicationController
         @budgets.to_json(include: [:user])
     end
 
-    get '/transactions' do
-        @budget_transactions = Transaction.all
-        @budget_transactions.to_json
+    post '/budgets' do
+        budget = Budget.create(
+            amount: params[:amount],
+            month: params[:month],
+            user_id: params[:user_id]
+        )
+        budget.to_json
+    end
+
+    delete '/budgets/:id' do
+        budget = Budget.find(params[:id])
+        budget.destroy
+        budget.to_json
     end
 
     private
