@@ -9,8 +9,6 @@ class ApplicationController < Sinatra::Base
   get '/categories' do
     categories = Category.all
     categories.to_json
-end
-
-  
+  end
 
 end

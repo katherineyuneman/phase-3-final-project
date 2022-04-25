@@ -2,7 +2,7 @@ class TransactionsController < ApplicationController
 
     get '/transactions' do
         @budget_transactions = Transaction.all
-        @budget_transactions.to_json
+        @budget_transactions.to_json(include: [:budget, :category])
     end
 
     post '/transactions' do
