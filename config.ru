@@ -14,4 +14,5 @@ use Rack::JSONBodyParser
 # Our application
 use BudgetsController
 use TransactionsController
+use UsersController
 run ApplicationController
