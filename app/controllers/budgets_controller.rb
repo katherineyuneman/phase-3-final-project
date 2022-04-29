@@ -6,12 +6,12 @@ class BudgetsController < ApplicationController
     end
 
     post '/budgets' do
-        budget = Budget.create(
-            amount: params[:amount],
-            month: params[:month],
-            user_id: params[:user_id]
-        )
-        budget.to_json
+        @budget = Budget.create(params)
+        if @budget.id
+            serialized_budget
+        else @budget.errors.full_messages.to_sentence
+        end
+        # budget.to_json
     end
 
     delete '/budgets/:id' do
