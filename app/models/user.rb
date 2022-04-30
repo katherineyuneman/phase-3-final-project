@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
     validates :first_name, presence: true
     validates :last_name, presence: true
 
+    #has secure password - from gem 'bcrypt'
     has_secure_password
   end
 

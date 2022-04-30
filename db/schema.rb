@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_22_192340) do
+ActiveRecord::Schema.define(version: 2022_04_30_010025) do
 
   create_table "budgets", force: :cascade do |t|
     t.decimal "amount"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2022_04_22_192340) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
+    t.string "password_digest"
   end
 
 end
