@@ -23,6 +23,7 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     diff-lcs (1.4.4)
+    dotenv (2.7.6)
     eventmachine (1.2.7)
     ffi (1.15.3)
     i18n (1.8.10)
@@ -94,6 +95,7 @@ DEPENDENCIES
   activerecord (~> 6.1)
   bcrypt
   database_cleaner (~> 2.0)
+  dotenv
   pry (~> 0.14.1)
   rack-contrib (~> 2.3)
   rack-cors (~> 1.1)

@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-    set :default_content_type, 'application/json'
+    # set :default_content_type, 'application/json'
 
     post "/login" do
         user = User.find_by_email(params[:email])
