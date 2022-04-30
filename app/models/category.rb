@@ -1,3 +1,3 @@
 class Category < ActiveRecord::Base
-  # belongs_to :transaction
+  has_many :transactions
   end
