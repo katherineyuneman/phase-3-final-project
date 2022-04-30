@@ -1,5 +1,6 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
+  set :session_secret, ENV["SESSION_SECRET"]
   
   # Add your routes here
   get "/" do

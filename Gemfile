@@ -44,6 +44,9 @@ group :development do
 
   gem 'bcrypt'
   # For password authentication use - has_secure_password in the model and authenticate method in the controller
+
+  gem 'dotenv'
+  #For setting up environment and SECRET_SESSION
 end
 
 # These gems will only be used when we are running tests
