@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_30_010025) do
+ActiveRecord::Schema.define(version: 2022_05_03_173950) do
 
   create_table "budgets", force: :cascade do |t|
     t.decimal "amount"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(version: 2022_04_30_010025) do
 
   create_table "categories", force: :cascade do |t|
     t.string "description"
+  end
+
+  create_table "months", force: :cascade do |t|
+    t.string "month_num"
+    t.string "month_desc"
+    t.integer "year"
   end
 
   create_table "transactions", force: :cascade do |t|

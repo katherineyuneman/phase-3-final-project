@@ -1,7 +1,7 @@
 class BudgetsController < ApplicationController
 
     get '/budgets' do
-        @budgets = Budget.all
+        @budgets = Budget.all.order(:month)
         @budgets.to_json(include: [:user])
     end
 
