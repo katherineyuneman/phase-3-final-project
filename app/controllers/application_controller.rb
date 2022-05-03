@@ -12,4 +12,9 @@ class ApplicationController < Sinatra::Base
     categories.to_json
   end
 
+  get '/months' do
+    @months = Month.all
+    @months.to_json
+end
+
 end

@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_03_173950) do
+ActiveRecord::Schema.define(version: 2022_05_03_175626) do
 
   create_table "budgets", force: :cascade do |t|
     t.decimal "amount"
-    t.string "month"
+    t.integer "month_id"
     t.integer "user_id"
   end
 
