@@ -1,14 +1,18 @@
 class SessionsController < ApplicationController
     # set :default_content_type, 'application/json'
 
-    post "/login" do
-        user = User.find_by_email(params[:email])
+    get '/login' do
+        @logged_in_user = User
+        @logged_in_user.to_json
+    end
 
-        if user&.authenticate(params[:password])
+    post "/login" do
+        user = User.find_by(:email => params[:email])
+        if user&.authenticate(params[:password_digest])
             session[:user_id] = user.id #save user id into server memory
-            halt 200, {user: user, message: "User successfully logged in"}
+            halt 200, {user: user, message: "User successfully logged in"}.to_json
         else
-            halt 404, {error: "Invalid Credentials!"}
+            halt 404, {error: "Invalid Credentials!"}.to_json
         end
     end
 
@@ -28,5 +32,4 @@ class SessionsController < ApplicationController
     # end
 
 
-  
-  end
+end

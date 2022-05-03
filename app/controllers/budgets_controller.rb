@@ -8,8 +8,8 @@ class BudgetsController < ApplicationController
     post '/budgets' do
         @budget = Budget.create(params)
         if @budget.id
-            serialized_budget
-        else @budget.errors.full_messages.to_sentence
+            @budget.to_json
+        else {errors: @budget.errors.full_messages.to_sentence}.to_json
         end
         # budget.to_json
     end
