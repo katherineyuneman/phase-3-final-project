@@ -1,8 +1,8 @@
 class BudgetsController < ApplicationController
 
     get '/budgets' do
-        @budgets = Budget.all
-        @budgets.to_json(include: [:user, :month])
+        @budgets = Budget.includes(:month)
+        @budgets.to_json(include: :month)
     end
 
     post '/budgets' do
@@ -26,3 +26,6 @@ class BudgetsController < ApplicationController
     end
 
 end
+
+
+# Budget.all.joins("INNER JOIN months ON months.month_id = months_id")
