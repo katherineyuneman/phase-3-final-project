@@ -1,7 +1,7 @@
 class BudgetsController < ApplicationController
 
     get '/budgets' do
-        @budgets = Budget.includes(:month)
+        @budgets = Budget.all
         @budgets.to_json(include: :month)
     end
 
@@ -11,18 +11,27 @@ class BudgetsController < ApplicationController
             @budget.to_json
         else {errors: @budget.errors.full_messages.to_sentence}.to_json
         end
-        # budget.to_json
     end
+
+    get '/budgets/:id' do
+        budget  = Budget.find(params[:id])
+        budget.to_json(include: :month)
+      end
 
     delete '/budgets/:id' do
         budget = Budget.find(params[:id])
         budget.destroy
         budget.to_json
     end
+ 
+    get '/budgets/:id/:month/transactions' do
+        @transactions_budget = Transaction.where(:budget_id => params[:id])
+        @transactions_budget.to_json
+    end
 
     private
     def find_budgets
-        @budget = Budget.find_by_id(params[:id])
+        @budget = Budget.find_by_id(params['id'])
     end
 
 end
