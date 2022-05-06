@@ -29,6 +29,11 @@ class BudgetsController < ApplicationController
         @transactions_budget.to_json
     end
 
+    get '/budgets/:id/:month/transactions/sum' do
+        @transactions_budget_sum = Transaction.where(:budget_id => params[:id]).sum(:amount)
+        @transactions_budget_sum.to_json
+    end
+
     private
     def find_budgets
         @budget = Budget.find_by_id(params['id'])
