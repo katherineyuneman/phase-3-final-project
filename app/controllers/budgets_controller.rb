@@ -1,12 +1,12 @@
 class BudgetsController < ApplicationController
 
     get '/budgets' do
-        @budgets = Budget.all
+        @budgets = Budget.includes(:month).order("months.month_num ASC")
         @budgets.to_json(include: :month)
     end
 
     post '/budgets' do
-        @budget = Budget.create(params)
+        @budget = Budget.create(month_id: params[:month_id], amount: params[:amount].to_i, user_id: params[:user_id])
         if @budget.id
             @budget.to_json
         else {errors: @budget.errors.full_messages.to_sentence}.to_json
@@ -23,6 +23,14 @@ class BudgetsController < ApplicationController
         budget.destroy
         budget.to_json
     end
+
+    get '/budgetsummary/:month_desc' do
+  
+        month_desc_param = Month.find_by_month_desc(params[:month_desc])
+        month_id_param = month_desc_param.id
+        budget = Budget.find_by_month_id(month_id_param)
+        budget.to_json(include: :month)
+      end
  
     get '/budgets/:id/:month/transactions' do
         @transactions_budget = Transaction.where(:budget_id => params[:id])
