@@ -25,12 +25,8 @@ class BudgetsController < ApplicationController
     end
 
     get '/budgetsummary/:month_desc' do
-  
-        month_desc_param = Month.find_by_month_desc(params[:month_desc])
-        month_id_param = month_desc_param.id
-        budget = Budget.find_by_month_id(month_id_param)
-        budget.to_json(include: :month)
-      end
+        budget_summary_by_month
+    end
  
     get '/budgets/:id/:month/transactions' do
         @transactions_budget = Transaction.where(:budget_id => params[:id])
@@ -38,13 +34,24 @@ class BudgetsController < ApplicationController
     end
 
     get '/budgets/:id/:month/transactions/sum' do
-        @transactions_budget_sum = Transaction.where(:budget_id => params[:id]).sum(:amount)
-        @transactions_budget_sum.to_json
+        transactions_sum
     end
 
     private
     def find_budgets
         @budget = Budget.find_by_id(params['id'])
+    end
+
+    def transactions_sum
+        @transactions_budget_sum = Transaction.where(:budget_id => params[:id]).sum(:amount)
+        @transactions_budget_sum.to_json
+    end
+
+    def budget_summary_by_month
+        month_desc_param = Month.find_by_month_desc(params[:month_desc])
+        month_id_param = month_desc_param.id
+        budget = Budget.find_by_month_id(month_id_param)
+        budget.to_json(include: :month)
     end
 
 end
