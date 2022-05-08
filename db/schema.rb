@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_03_175626) do
+ActiveRecord::Schema.define(version: 2022_05_08_184725) do
 
   create_table "budgets", force: :cascade do |t|
     t.decimal "amount"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2022_05_03_175626) do
   create_table "transactions", force: :cascade do |t|
     t.string "description"
     t.decimal "amount"
-    t.date "date_created"
+    t.datetime "created_at"
     t.integer "category_id"
     t.integer "budget_id"
   end
