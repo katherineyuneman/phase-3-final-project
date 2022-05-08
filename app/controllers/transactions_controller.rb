@@ -1,15 +1,19 @@
 class TransactionsController < ApplicationController
 
     get '/transactions' do
-        @budget_transactions = Transaction.all.order(:created_at)
+        @budget_transactions = Transaction.all.order(created_at: :asc)
         @budget_transactions.to_json(include: [:budget, :category])
+    end
+
+    get '/transactions/recent' do
+        @transaction_summary = Transaction.all.order(created_at: :desc).last(5)
+        @transaction_summary.to_json(include: [:budget, :category])
     end
 
     post '/transactions' do
         @transaction = Transaction.create(
             description: params[:description],
             amount: params[:amount].to_f,
-            # date_created: params[:date_created],
             category_id: params[:category_id],
             budget_id: params[:budget_id]
         )
@@ -30,5 +34,6 @@ class TransactionsController < ApplicationController
         @transactions_budget_sum = Transaction.where(:budget_id => params[:id]).sum(:amount)
         @transactions_budget_sum.to_json
     end
+    
 
 end
