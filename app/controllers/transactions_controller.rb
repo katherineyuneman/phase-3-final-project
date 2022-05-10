@@ -29,6 +29,12 @@ class TransactionsController < ApplicationController
         transactions_sum
     end
 
+    delete '/transactions/:id' do
+        transaction = Transaction.find(params[:id])
+        transaction.destroy
+        transaction.to_json
+      end
+
     private
     def transactions_sum
         @transactions_budget_sum = Transaction.where(:budget_id => params[:id]).sum(:amount)
