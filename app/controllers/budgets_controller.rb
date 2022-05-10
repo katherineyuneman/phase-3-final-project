@@ -32,7 +32,7 @@ class BudgetsController < ApplicationController
     def find_budgets
         @budget = Budget.find_by_id(params['id'])
     end
-    
+
     def budget_summary_by_month
         month_desc_param = Month.find_by_month_desc(params[:month_desc])
         month_id_param = month_desc_param.id
