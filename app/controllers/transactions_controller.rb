@@ -1,8 +1,14 @@
 class TransactionsController < ApplicationController
 
     get '/transactions' do
-        @budget_transactions = Transaction.all.order(created_at: :asc)
-        @budget_transactions.to_json(include: [:budget, :category])
+        # @budget_transactions = Transaction.all.includes(budget: [:month])
+        # @budget_transactions = Transaction.all.order(created_at: :asc)
+        @budget_transactions = Transaction.joins(budget: :month).select(
+            'transactions.description as desc','transactions.id as id', 'budgets.id as budget_id', 'transactions.amount',
+            'transactions.created_at', 'months.month_desc', 'months.year'
+            )
+        @budget_transactions.to_json()
+
     end
 
     get '/transactions/recent' do

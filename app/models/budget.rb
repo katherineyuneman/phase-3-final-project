@@ -7,4 +7,3 @@ class Budget < ActiveRecord::Base
     accepts_nested_attributes_for :month
 
   end
-
