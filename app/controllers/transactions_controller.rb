@@ -4,9 +4,9 @@ class TransactionsController < ApplicationController
         # @budget_transactions = Transaction.all.includes(budget: [:month])
         # @budget_transactions = Transaction.all.order(created_at: :asc)
         @budget_transactions = Transaction.joins(budget: :month).select(
-            'transactions.description as desc','transactions.id as id', 'budgets.id as budget_id', 'transactions.amount',
+            'transactions.description','transactions.id as id', 'budgets.id as budget_id', 'transactions.amount',
             'transactions.created_at', 'months.month_desc', 'months.year'
-            )
+            ).order(created_at: :desc)
         @budget_transactions.to_json()
 
     end
@@ -27,7 +27,10 @@ class TransactionsController < ApplicationController
     end
 
     get '/budgets/:id/:month/transactions' do
-        @transactions_budget = Transaction.where(:budget_id => params[:id])
+        @transactions_budget = Transaction.joins(budget: :month).select(
+            'transactions.description','transactions.id as id', 'budgets.id as budget_id', 'transactions.amount',
+            'transactions.created_at', 'months.month_desc', 'months.year'
+            ).where(:budget_id => params[:id])
         @transactions_budget.to_json
     end
 
