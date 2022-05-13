@@ -18,6 +18,14 @@ class BudgetsController < ApplicationController
         budget.to_json(include: :month)
       end
 
+    patch '/budgets/:id' do
+        budget = Budget.find(params[:id])
+        budget.update(
+            amount: params[:amount]
+        )
+        budget.to_json
+    end
+
     delete '/budgets/:id' do
         budget = Budget.find(params[:id])
         budget.destroy

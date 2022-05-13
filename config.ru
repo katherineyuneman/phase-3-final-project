@@ -4,9 +4,9 @@ require_relative "./config/environment"
 use Rack::Cors do
   allow do
     origins '*'
-    resource '/login',
-      headers: :any,
-      methods: [:post]
+    # resource '/login',
+    #   headers: :any,
+    #   methods: [:post]
     resource '*',
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head]
