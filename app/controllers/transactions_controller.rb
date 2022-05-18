@@ -40,9 +40,9 @@ class TransactionsController < ApplicationController
 
     private
     def budget_select
-        @budget_select = Transaction.joins(budget: :month).select(
+        @budget_select = Transaction.joins(budget: :month).joins(:category).select(
             'transactions.description','transactions.id as id', 'budgets.id as budget_id', 'transactions.amount',
-            'transactions.created_at', 'months.month_desc', 'months.year')
+            'transactions.created_at', 'months.month_desc', 'months.year', 'category_description')
     end
     
     def transactions_sum

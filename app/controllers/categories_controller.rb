@@ -1,11 +1,9 @@
 class CategoriesController < ApplicationController
 
-    # get '/transactions' do
-    #     budget_select
-    #     @budget_transactions = @budget_select.order(created_at: :desc)
-    #     @budget_transactions.to_json()
-
-    # end
+    get '/categories' do
+        @categories = Category.all
+        @categories.to_json()
+    end
 
     # get '/transactions/recent' do
     #     @transaction_summary = Transaction.all.order(created_at: :desc).last(5)
