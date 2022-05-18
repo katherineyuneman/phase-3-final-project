@@ -22,4 +22,5 @@ use BudgetsController
 use TransactionsController
 use UsersController
 use SessionsController
+use CategoriesController
 run ApplicationController
