@@ -20,9 +20,7 @@ class BudgetsController < ApplicationController
 
     patch '/budgets/:id' do
         budget = Budget.find(params[:id])
-        budget.update(
-            amount: params[:amount]
-        )
+        budget.update(params)
         budget.to_json
     end
 

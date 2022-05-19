@@ -9,7 +9,7 @@ class TransactionsController < ApplicationController
 
     get '/transactions/recent' do
         @transaction_summary = Transaction.all.order(created_at: :desc).first(4)
-        @transaction_summary.to_json(include: [:budget, :category])
+        @transaction_summary.to_json(include: [:category, :budget])
     end
 
     post '/transactions' do
@@ -20,7 +20,7 @@ class TransactionsController < ApplicationController
             budget_id: params[:budget_id]
         )
         if transaction.save
-            transaction.to_json
+            transaction.to_json()
         else
             {errors: transaction.errors.full_messages}.to_json
         end
