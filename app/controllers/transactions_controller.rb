@@ -8,18 +8,22 @@ class TransactionsController < ApplicationController
     end
 
     get '/transactions/recent' do
-        @transaction_summary = Transaction.all.order(created_at: :desc).last(5)
+        @transaction_summary = Transaction.all.order(created_at: :desc).first(4)
         @transaction_summary.to_json(include: [:budget, :category])
     end
 
     post '/transactions' do
-        @transaction = Transaction.create(
+        transaction = Transaction.create(
             description: params[:description],
             amount: params[:amount].to_f,
             category_id: params[:category_id],
             budget_id: params[:budget_id]
         )
-        @transaction.to_json
+        if transaction.save
+            transaction.to_json
+        else
+            {errors: transaction.errors.full_messages}.to_json
+        end
     end
 
     get '/budgets/:id/:month/transactions' do
