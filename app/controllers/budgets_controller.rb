@@ -37,11 +37,6 @@ class BudgetsController < ApplicationController
     end
 
 
-    private
-    def find_budgets
-        @budget = Budget.find_by_id(params[:id])
-    end
-
 end
 
 
