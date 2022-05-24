@@ -1,15 +1,16 @@
 class TransactionsController < ApplicationController
 
     get '/transactions' do
-        budget_select
-        @budget_transactions = @budget_select.order(created_at: :desc)
+        @budget_select_custom = Transaction.budget_select
+        @budget_transactions = @budget_select_custom.order(created_at: :desc)
         @budget_transactions.to_json()
 
     end
 
     get '/transactions/recent' do
-        @transaction_summary = Transaction.all.order(created_at: :desc).first(4)
-        @transaction_summary.to_json(include: [:category, :budget])
+        @budget_select_custom = Transaction.budget_select
+        @transaction_summary = @budget_select_custom.order(created_at: :desc).first(4)
+        @transaction_summary.to_json()
     end
 
     post '/transactions' do
@@ -26,13 +27,13 @@ class TransactionsController < ApplicationController
         end
     end
 
-    get '/budgets/:id/:month/transactions' do
-        budget_select
-        @transactions_budget = @budget_select.where(:budget_id => params[:id])
+    get '/budgets/:id/transactions' do
+        @budget_select_custom = Transaction.budget_select
+        @transactions_budget = @budget_select_custom.where(:budget_id => params[:id])
         @transactions_budget.to_json
     end
 
-    get '/budgets/:id/:month/transactions/sum' do
+    get '/budgets/:id/transactions/sum' do
         transactions_sum
     end
 
@@ -42,19 +43,15 @@ class TransactionsController < ApplicationController
         transaction.to_json
       end
 
+
     private
-    def budget_select
-        @budget_select = Transaction.joins(budget: :month).joins(:category).select(
-            'transactions.description','transactions.id as id', 'budgets.id as budget_id', 'transactions.amount',
-            'transactions.created_at', 'months.month_desc', 'months.year', 'categories.description as category_description')
-    end
     
     def transactions_sum
-        @transactions_budget_sum = Transaction.where(:budget_id => params[:id]).sum(:amount)
+        @transactions_budget_sum = Transaction.where('budget_id = ?', params[:id]).sum(:amount)
+        # @transactions_budget_sum = Transaction.where(:budget_id => params[:id]).sum(:amount)
+        # @transactions_budget_sum = Transaction.where(budget_id: params[:id]).sum(:amount)
         @transactions_budget_sum.to_json
     end
 
     
-    
-
 end

@@ -30,13 +30,19 @@ class BudgetsController < ApplicationController
         budget.to_json
     end
 
+    get '/budgetsummary/stats' do
+        stats = Transaction.highest_count_transactions
+    end
+
     get '/budgetsummary/:month_desc' do
         budget_summary_by_month
     end
 
+    
+
     private
     def find_budgets
-        @budget = Budget.find_by_id(params['id'])
+        @budget = Budget.find_by_id(params[:id])
     end
 
     def budget_summary_by_month
