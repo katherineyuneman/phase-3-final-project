@@ -14,7 +14,9 @@ class BudgetsController < ApplicationController
     end
 
     get '/budgetsummary/:month_desc' do
-        budget_summary_by_month
+        month_param = Month.find_by_month_desc(params[:month_desc]).id
+        budget = Budget.find_by_month_id(month_param)
+        budget.to_json(include: :month)
     end
 
     get '/budgets/:id' do
@@ -38,13 +40,6 @@ class BudgetsController < ApplicationController
     private
     def find_budgets
         @budget = Budget.find_by_id(params[:id])
-    end
-
-    def budget_summary_by_month
-        month_desc_param = Month.find_by_month_desc(params[:month_desc])
-        month_id_param = month_desc_param.id
-        budget = Budget.find_by_month_id(month_id_param)
-        budget.to_json(include: :month)
     end
 
 end
