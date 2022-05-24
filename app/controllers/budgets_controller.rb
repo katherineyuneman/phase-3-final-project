@@ -14,10 +14,16 @@ class BudgetsController < ApplicationController
     end
 
     get '/budgetsummary/:month_desc' do
-        month_param = Month.find_by_month_desc(params[:month_desc]).id
-        budget = Budget.find_by_month_id(month_param)
+        budget = Budget.find_by_month_id(month_desc_conversion)
         budget.to_json(include: :month)
     end
+
+    get '/budgetsummary/:month_desc/max_spend' do
+        budget_id = Budget.find_by_month_id(month_desc_conversion).id
+        max_spend = Transaction.where(:budget_id => budget_id).maximum(:amount)
+        max_spend.to_json
+    end
+
 
     get '/budgets/:id' do
         budget  = Budget.find(params[:id])
@@ -36,8 +42,9 @@ class BudgetsController < ApplicationController
         budget.to_json
     end
 
+    private
+    def month_desc_conversion
+        Month.find_by_month_desc(params[:month_desc]).id
+    end
 
 end
-
-
-# Budget.all.joins("INNER JOIN months ON months.month_id = months_id")
