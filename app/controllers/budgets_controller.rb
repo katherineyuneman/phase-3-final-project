@@ -13,6 +13,10 @@ class BudgetsController < ApplicationController
         end
     end
 
+    get '/budgetsummary/:month_desc' do
+        budget_summary_by_month
+    end
+
     get '/budgets/:id' do
         budget  = Budget.find(params[:id])
         budget.to_json(include: :month)
@@ -21,7 +25,7 @@ class BudgetsController < ApplicationController
     patch '/budgets/:id' do
         budget = Budget.find(params[:id])
         budget.update(params)
-        budget.to_json
+        budget.to_json(include: :month)
     end
 
     delete '/budgets/:id' do
@@ -30,15 +34,6 @@ class BudgetsController < ApplicationController
         budget.to_json
     end
 
-    get '/budgetsummary/stats' do
-        stats = Transaction.highest_count_transactions
-    end
-
-    get '/budgetsummary/:month_desc' do
-        budget_summary_by_month
-    end
-
-    
 
     private
     def find_budgets

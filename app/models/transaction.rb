@@ -10,7 +10,7 @@ class Transaction < ActiveRecord::Base
     accepts_nested_attributes_for :budget
 
     def self.budget_select
-      Transaction.joins(budget: :month).joins(:category).select(
+      self.joins(budget: :month).joins(:category).select(
           'transactions.description','transactions.id as id', 'budgets.id as budget_id', 'transactions.amount',
           'transactions.created_at', 'months.month_desc', 'months.year', 'categories.description as category_description')
     end

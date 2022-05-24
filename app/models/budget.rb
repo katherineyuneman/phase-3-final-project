@@ -4,7 +4,5 @@ class Budget < ActiveRecord::Base
     belongs_to :user
     validates :month_id, presence: true, uniqueness: true
 
-    accepts_nested_attributes_for :month
-
-
+    
   end
