@@ -7,7 +7,7 @@ class Transaction < ActiveRecord::Base
     validates :category_id, presence: { message: ": Please select a category." }
     validates :budget_id, presence: { message: ": Please select a Budget month." }
     
-    accepts_nested_attributes_for :budget
+    # accepts_nested_attributes_for :budget
 
     def self.budget_select
       self.joins(budget: :month).joins(:category).select(
