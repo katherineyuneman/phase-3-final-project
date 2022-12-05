@@ -20,7 +20,7 @@ class TransactionsController < ApplicationController
             category_id: params[:category_id],
             budget_id: params[:budget_id]
         )
-        if transaction.save
+        if transaction.valid?
             transaction.to_json()
         else
             {errors: transaction.errors.full_messages}.to_json

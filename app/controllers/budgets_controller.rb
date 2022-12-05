@@ -1,25 +1,28 @@
 class BudgetsController < ApplicationController
 
+    
     get '/budgets' do
-        @budgets = Budget.includes(:month).order("months.month_num ASC")
-        @budgets.to_json(include: :month)
+        budgets = Budget.includes(:month).order("months.month_num ASC")
+        budgets.to_json(include: :month)
     end
 
     post '/budgets' do
-        @budget = Budget.create(month_id: params[:month_id], amount: params[:amount].to_i, user_id: params[:user_id])
-        if @budget.id
-            @budget.to_json
-        else {errors: @budget.errors.full_messages.to_sentence}.to_json
+        budget = Budget.create(month_id: params[:month_id], amount: params[:amount].to_i, user_id: params[:user_id])
+        if budget.id
+            budget.to_json
+        else {errors: budget.errors.full_messages.to_sentence}.to_json
         end
     end
 
     get '/budgetsummary/:month_desc' do
-        budget = Budget.find_by_month_id(month_desc_conversion)
+        month_id = Month.month_desc_conversion(params[:month_desc])
+        budget = Budget.find_by_month_id(month_id)
         budget.to_json(include: :month)
     end
 
     get '/budgetsummary/:month_desc/max_spend' do
-        budget_id = Budget.find_by_month_id(month_desc_conversion).id
+        month_id = Month.month_desc_conversion(params[:month_desc])
+        budget_id = Budget.find_by_month_id(month_id).id
         max_spend = Transaction.where(:budget_id => budget_id).maximum(:amount)
         max_spend.to_json
     end
@@ -43,8 +46,8 @@ class BudgetsController < ApplicationController
     end
 
     private
-    def month_desc_conversion
-        Month.find_by_month_desc(params[:month_desc]).id
-    end
+    # def month_desc_conversion
+    #     Month.find_by_month_desc(params[:month_desc]).id
+    # end
 
 end
